@@ -31,13 +31,11 @@ class RegisterActivity : AppCompatActivity() {
             } else if (password != confirmPassword) {
                 Toast.makeText(this, "Las contraseñas no coinciden.", Toast.LENGTH_SHORT).show()
             } else {
-                // Aquí iría tu lógica de registro de usuario real
-                // Por ahora, solo un Toast de ejemplo
                 Toast.makeText(this, "Cuenta creada exitosamente para $username.", Toast.LENGTH_SHORT).show()
-                // Después de un registro exitoso, puedes navegar de vuelta al login o directamente a la pantalla principal
+                // navegar de vuelta al login o directamente a la pantalla principal, si, login = exitoso
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
-                finish() // Cierra la actividad de registro
+                finish()
             }
         }
 

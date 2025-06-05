@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 class LoginActivity : AppCompatActivity() {
 
     private val DEFAULT_USERNAME = "prueba"
-    private val DEFAULT_EMAIL = "prueba@ejemplo.com" // Opcional, si tu login acepta email
+    private val DEFAULT_EMAIL = "prueba@ejemplo.com"
     private val DEFAULT_PASSWORD = "prueba123"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,12 +32,10 @@ class LoginActivity : AppCompatActivity() {
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Por favor, ingresa usuario y contraseña.", Toast.LENGTH_SHORT).show()
             } else {
-                // Aquí iría tu lógica de autenticación real
-                // Por ahora, solo un Toast de ejemplo
                 if ((username == DEFAULT_USERNAME || username == DEFAULT_EMAIL) && password == DEFAULT_PASSWORD) {
                     Toast.makeText(this, "Inicio de sesión exitoso. ¡Bienvenido!", Toast.LENGTH_SHORT).show()
-                    // Si el login es exitoso, navega a la siguiente pantalla (por ejemplo, HomeActivity)
-                    val intent = Intent(this, HomeActivity::class.java) // Crea HomeActivity más adelante
+                    // Si el login es exitoso, navega a la siguiente pantalla
+                    val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     finish() // Para que el usuario no pueda volver al login con el botón atrás
                 } else {
