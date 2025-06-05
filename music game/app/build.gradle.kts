@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -17,6 +18,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
 
     buildTypes {
         release {
@@ -56,4 +58,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //firabase bom
+    implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
+
+    implementation("com.google.firebase:firebase-analytics")
+
+    implementation ("androidx.appcompat:appcompat:1.6.1")
+
+    implementation ("com.google.android.material:material:1.12.0")
+
+
 }
