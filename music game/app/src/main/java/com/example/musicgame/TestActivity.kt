@@ -1,5 +1,6 @@
 package com.example.musicgame
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast 
 
 class TestActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,9 +68,17 @@ fun TestScreen() {
             listOf("Bach", "Mozart", "Beethoven", "Chopin")
         )
     }
-
     // scroll
     val scrollState = rememberScrollState()
+    val context = LocalContext.current
+    // mapa que guarda las respuestas seleccionadas
+    val selectedAnswers = remember { mutableStateMapOf<Int, String?>() }
+    //comprueba que todas las preguntas sean respondidas
+    val allQuestionsAnswered = remember {
+        derivedStateOf {
+            selectedAnswers.size == questions.size && selectedAnswers.values.all { it != null }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -82,13 +93,28 @@ fun TestScreen() {
             QuestionItem(
                 questionNumber = qIndex + 1,
                 questionText = question,
-                options = options[qIndex]
+                options = options[qIndex],
+                selectedOption = selectedAnswers[qIndex],
+                onOptionSelected = { selectedOptionText ->
+                    selectedAnswers[qIndex] = selectedOptionText
+                }
             )
             Spacer(modifier = Modifier.height(24.dp))
         }
 
         Button(
-            onClick = { },
+            onClick = {
+                if (allQuestionsAnswered.value) {
+                    //cambio de pantalla, confirmacion de preguntas respondidas
+                    val intent = Intent(context, LevelsActivity::class.java)
+                    context.startActivity(intent)
+                    (context as? ComponentActivity)?.finish()
+                } else {
+                    //mensaje de confirmacion
+                    Toast.makeText(context, "Por favor, responde todas las preguntas antes de finalizar.", Toast.LENGTH_SHORT).show()
+                }
+            },
+            enabled = allQuestionsAnswered.value, // <--- Habilita/Deshabilita el botón
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
             Text("Finalizar Test")
@@ -98,7 +124,13 @@ fun TestScreen() {
 }
 
 @Composable
-fun QuestionItem(questionNumber: Int, questionText: String, options: List<String>) {
+fun QuestionItem(
+    questionNumber: Int,
+    questionText: String,
+    options: List<String>,
+    selectedOption: String?,
+    onOptionSelected: (String) -> Unit //  Callback para cuando se selecciona una opción
+) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = "Pregunta $questionNumber:",
@@ -114,8 +146,6 @@ fun QuestionItem(questionNumber: Int, questionText: String, options: List<String
             color = Color.White
         )
 
-        val selectedOption = remember { mutableStateOf<String?>(null) }
-
         options.forEach { option ->
             Row(
                 modifier = Modifier
@@ -124,8 +154,8 @@ fun QuestionItem(questionNumber: Int, questionText: String, options: List<String
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 RadioButton(
-                    selected = (option == selectedOption.value),
-                    onClick = { selectedOption.value = option },
+                    selected = (option == selectedOption),
+                    onClick = { onOptionSelected(option) },
                     colors = RadioButtonDefaults.colors(
                         selectedColor = MaterialTheme.colorScheme.primary,
                         unselectedColor = Color.White
