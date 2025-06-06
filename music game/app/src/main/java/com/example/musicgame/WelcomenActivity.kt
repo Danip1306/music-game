@@ -35,7 +35,7 @@ class WelcomeActivity : ComponentActivity() {
                     onStartFromZeroClick = {
                         // Niveles
                         Toast.makeText(this, "Navegando a Niveles", Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this, LevelsActivity::class.java))
+                        startActivity(Intent(this, DashboardActivity::class.java))
                     }
                 )
             }

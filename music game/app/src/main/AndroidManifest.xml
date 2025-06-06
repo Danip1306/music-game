@@ -26,6 +26,8 @@
         <activity android:name=".TestActivity" />
         <activity android:name=".LevelsActivity" />
         <activity android:name=".LevelDetailActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".DashboardActivity" />
     </application>
 
 </manifest>

@@ -18,16 +18,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.musicgame.ui.theme.MusicGameTheme
-import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext // ¡Necesario para startActivity en Composable!
 
 class LevelsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MusicGameTheme {
+                // Este LevelActivity ya no será el punto de entrada principal para los niveles,
+                // sino que el composable LevelsScreen será llamado desde DashboardActivity.
+                // Sin embargo, si aún necesitas esta Activity por alguna razón,
+                // puedes dejarla y llamará a LevelsScreen, pero el usuario llegará a LevelsScreen
+                // principalmente a través de DashboardActivity.
                 LevelsScreen(onLevelClick = { levelNumber ->
                     val intent = Intent(this, LevelDetailActivity::class.java).apply {
-                        putExtra("levelNumber", levelNumber) // Pasa el número de nivel
+                        putExtra("levelNumber", levelNumber)
                     }
                     startActivity(intent)
                 })
@@ -36,10 +41,14 @@ class LevelsActivity : ComponentActivity() {
     }
 }
 
+// Mueve esta función Composable fuera de la clase LevelsActivity
+// para que pueda ser llamada directamente por NavHost.
 @Composable
 fun LevelsScreen(onLevelClick: (Int) -> Unit) {
-    // ista simple de niveles
     val levels = (1..10).toList()
+
+    // El contexto lo obtenemos aquí para poder lanzar intents
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -62,19 +71,25 @@ fun LevelsScreen(onLevelClick: (Int) -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(levels) { level ->
-                LevelItem(levelNumber = level, onLevelClick = onLevelClick)
+                LevelItem(levelNumber = level, onLevelClick = {
+                    // Aquí es donde realmente se lanza la LevelDetailActivity
+                    val intent = Intent(context, LevelDetailActivity::class.java).apply {
+                        putExtra("levelNumber", level)
+                    }
+                    context.startActivity(intent)
+                })
             }
         }
     }
 }
 
 @Composable
-fun LevelItem(levelNumber: Int, onLevelClick: (Int) -> Unit) {
+fun LevelItem(levelNumber: Int, onLevelClick: () -> Unit) { // onLevelClick ahora no necesita Int
     Card(
         modifier = Modifier
             .fillMaxWidth(0.8f)
             .height(80.dp)
-            .clickable { onLevelClick(levelNumber) } // Hace que el nivel sea clickeable
+            .clickable { onLevelClick() } // Llama al onLevelClick genérico
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),

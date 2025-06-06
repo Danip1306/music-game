@@ -21,7 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.platform.LocalContext
-import android.widget.Toast 
+import android.widget.Toast
 
 class TestActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,8 +105,8 @@ fun TestScreen() {
         Button(
             onClick = {
                 if (allQuestionsAnswered.value) {
-                    //cambio de pantalla, confirmacion de preguntas respondidas
-                    val intent = Intent(context, LevelsActivity::class.java)
+                    //cambio de pa ntalla, confirmacion de preguntas respondidas
+                    val intent = Intent(context, DashboardActivity::class.java)
                     context.startActivity(intent)
                     (context as? ComponentActivity)?.finish()
                 } else {
@@ -114,7 +114,7 @@ fun TestScreen() {
                     Toast.makeText(context, "Por favor, responde todas las preguntas antes de finalizar.", Toast.LENGTH_SHORT).show()
                 }
             },
-            enabled = allQuestionsAnswered.value, // <--- Habilita/Deshabilita el botón
+            enabled = allQuestionsAnswered.value, // Habilita/Deshabilita el botón
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
             Text("Finalizar Test")
