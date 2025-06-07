@@ -5,6 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
@@ -18,13 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.musicgame.ui.theme.MusicGameTheme
-import androidx.compose.ui.platform.LocalContext
 
 class DashboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,14 +38,22 @@ class DashboardActivity : ComponentActivity() {
     }
 }
 
+//pantallas para el nav
 sealed class Screen(val route: String, val label: String, val icon: @Composable () -> Unit) {
     data object Levels : Screen("levels", "Niveles", { Icon(Icons.Filled.List, contentDescription = null) })
     data object Settings : Screen("settings", "Ajustes", { Icon(Icons.Filled.Settings, contentDescription = null) })
+    data object Language : Screen("language", "Idioma", { Icon(Icons.Filled.Language, contentDescription = null) })
+    data object Profile : Screen("profile", "Perfil", { Icon(Icons.Filled.Person, contentDescription = null) })
+    data object About : Screen("about", "Acerca de", { Icon(Icons.Filled.Info, contentDescription = null) })
 }
 
+// Lista de elementos navegación inferior
 val items = listOf(
     Screen.Levels,
-    Screen.Settings
+    Screen.Settings,
+    Screen.Language,
+    Screen.Profile,
+    Screen.About
 )
 
 @Composable
@@ -81,12 +90,23 @@ fun DashboardScreen() {
             startDestination = Screen.Levels.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Levels.route) {
 
-                LevelsScreen(onLevelClick = { levelNumber ->  })
+            composable(Screen.Levels.route) {
+                LevelsScreen(onLevelClick = { levelNumber ->
+
+                })
             }
             composable(Screen.Settings.route) {
                 SettingsScreen()
+            }
+            composable(Screen.Language.route) {
+                LanguageScreen() // pantalla lenguaje
+            }
+            composable(Screen.Profile.route) {
+                ProfileScreen() // pantalla Perfil
+            }
+            composable(Screen.About.route) {
+                AboutScreen() // pantalla Acerca de
             }
         }
     }

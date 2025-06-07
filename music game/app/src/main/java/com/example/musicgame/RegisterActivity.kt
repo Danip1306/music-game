@@ -40,7 +40,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         buttonBackToLogin.setOnClickListener {
-            // Simplemente cierra esta actividad para volver a la anterior (LoginActivity)
+            // cierra esta actividad para volver a la anterior (LoginActivity)
             finish()
         }
     }

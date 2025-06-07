@@ -17,7 +17,6 @@ class HomeActivity : AppCompatActivity() {
     private fun navigateToWelcomeScreen() {
         val intent = Intent(this, WelcomeActivity::class.java)
         startActivity(intent)
-        // Opcional: Finaliza HomeActivity para que el usuario no pueda volver a ella con el botón "Atrás"
         finish()
     }
 

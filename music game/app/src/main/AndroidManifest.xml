@@ -28,6 +28,8 @@
         <activity android:name=".LevelDetailActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".DashboardActivity" />
+        <activity android:name=".ProgressActivity" />
+        <activity android:name=".HelpActivity" />
     </application>
 
 </manifest>
