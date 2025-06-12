@@ -5,21 +5,20 @@ import android.widget.Toast
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.musicgame.ui.theme.MusicGameTheme
+import com.example.musicgame.ui.theme.MusicGameColors
 
 class WelcomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,12 +27,10 @@ class WelcomeActivity : ComponentActivity() {
             MusicGameTheme {
                 WelcomeScreen(
                     onTakeTestClick = {
-                        // Test de Conocimientos
                         Toast.makeText(this, "Navegando a Test", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, TestActivity::class.java))
                     },
                     onStartFromZeroClick = {
-                        // Niveles
                         Toast.makeText(this, "Navegando a Niveles", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this, DashboardActivity::class.java))
                     }
@@ -49,38 +46,122 @@ fun WelcomeScreen(
     onStartFromZeroClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        MusicGameColors.Purple,
+                        MusicGameColors.Blue,
+                        MusicGameColors.Green
+                    )
+                )
+            )
     ) {
-        Text(
-            text = "¡Hola, [Nombre de Usuario]!",
-            fontSize = 28.sp,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        Text(
-            text = "¿Listo para comenzar tu aventura musical?",
-            fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
-
-        Button(
-            onClick = onTakeTestClick,
-            modifier = Modifier.fillMaxSize(0.8f)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(32.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Realizar Test de Conocimientos")
-        }
+            // Título principal
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 32.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MusicGameColors.White.copy(alpha = 0.9f)
+                ),
+                shape = RoundedCornerShape(20.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "🎵 Tonika 🎵",
+                        style = MaterialTheme.typography.displayMedium,
+                        color = MusicGameColors.Purple,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    Text(
+                        text = "¡Hola, [Nombre de Usuario]!",
+                        style = MaterialTheme.typography.headlineMedium,
+                        color = MusicGameColors.Black,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    Text(
+                        text = "¿Listo para comenzar tu aventura musical?",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MusicGameColors.Gray800,
+                        textAlign = TextAlign.Center
+                    )
+                }
+            }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            // Botones principales
+            Button(
+                onClick = onTakeTestClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MusicGameColors.Orange,
+                    contentColor = MusicGameColors.White
+                ),
+                shape = RoundedCornerShape(16.dp),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 6.dp)
+            ) {
+                Text(
+                    text = "🧠 Realizar Test de Conocimientos",
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
 
-        Button(
-            onClick = onStartFromZeroClick,
-            modifier = Modifier.fillMaxSize(0.8f)
-        ) {
-            Text("Empezar desde Nivel Cero")
+            Button(
+                onClick = onStartFromZeroClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(64.dp)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MusicGameColors.Red,
+                    contentColor = MusicGameColors.White
+                ),
+                shape = RoundedCornerShape(16.dp),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 6.dp)
+            ) {
+                Text(
+                    text = "🎼 Empezar desde Nivel Cero",
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+
+            // Tarjeta informativa
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MusicGameColors.White.copy(alpha = 0.8f)
+                ),
+                shape = RoundedCornerShape(16.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            ) {
+                Text(
+                    text = "💡 Tip: Si eres principiante, te recomendamos empezar desde el nivel cero. Si ya tienes conocimientos musicales, ¡haz el test para encontrar tu nivel ideal!",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MusicGameColors.Gray800,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
     }
 }

@@ -37,5 +37,4 @@ fun ProfileScreen() {
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    // MusicGameTheme { LanguageScreen() }
 }
