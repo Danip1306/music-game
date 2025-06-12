@@ -2,26 +2,27 @@ package com.example.musicgame
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonDefaults
-import androidx.compose.material3.Text
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.musicgame.ui.theme.MusicGameTheme
-import androidx.compose.ui.graphics.Color
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.ui.platform.LocalContext
-import android.widget.Toast
+import com.example.musicgame.ui.theme.MusicGameColors
 
 class TestActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,6 @@ class TestActivity : ComponentActivity() {
 
 @Composable
 fun TestScreen() {
-    // preguntas ejemplo, no son las finales
     val questions = remember {
         listOf(
             "¿Cuál es la primera nota musical?",
@@ -68,105 +68,206 @@ fun TestScreen() {
             listOf("Bach", "Mozart", "Beethoven", "Chopin")
         )
     }
-    // scroll
+
     val scrollState = rememberScrollState()
     val context = LocalContext.current
-    // mapa que guarda las respuestas seleccionadas
     val selectedAnswers = remember { mutableStateMapOf<Int, String?>() }
-    //comprueba que todas las preguntas sean respondidas
     val allQuestionsAnswered = remember {
         derivedStateOf {
             selectedAnswers.size == questions.size && selectedAnswers.values.all { it != null }
         }
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
-            .verticalScroll(scrollState),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(24.dp))
-
-        questions.forEachIndexed { qIndex, question ->
-            QuestionItem(
-                questionNumber = qIndex + 1,
-                questionText = question,
-                options = options[qIndex],
-                selectedOption = selectedAnswers[qIndex],
-                onOptionSelected = { selectedOptionText ->
-                    selectedAnswers[qIndex] = selectedOptionText
-                }
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        MusicGameColors.Blue,
+                        MusicGameColors.Purple,
+                        MusicGameColors.Red
+                    )
+                )
             )
-            Spacer(modifier = Modifier.height(24.dp))
-        }
-
-        Button(
-            onClick = {
-                if (allQuestionsAnswered.value) {
-                    //cambio de pa ntalla, confirmacion de preguntas respondidas
-                    val intent = Intent(context, DashboardActivity::class.java)
-                    context.startActivity(intent)
-                    (context as? ComponentActivity)?.finish()
-                } else {
-                    //mensaje de confirmacion
-                    Toast.makeText(context, "Por favor, responde todas las preguntas antes de finalizar.", Toast.LENGTH_SHORT).show()
-                }
-            },
-            enabled = allQuestionsAnswered.value, // Habilita/Deshabilita el botón
-            modifier = Modifier.fillMaxWidth(0.8f)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Finalizar Test")
+            // Encabezado
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 24.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MusicGameColors.White.copy(alpha = 0.95f)
+                ),
+                shape = RoundedCornerShape(20.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "🎼 Test de Conocimientos Musicales",
+                        style = MaterialTheme.typography.headlineLarge,
+                        color = MusicGameColors.Purple,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(bottom = 8.dp)
+                    )
+                    Text(
+                        text = "Responde todas las preguntas para determinar tu nivel",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MusicGameColors.Gray800,
+                        textAlign = TextAlign.Center
+                    )
+
+                    // Indicador de progreso
+                    LinearProgressIndicator(
+                        progress = selectedAnswers.size.toFloat() / questions.size,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 12.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                        color = MusicGameColors.Green,
+                        trackColor = MusicGameColors.Gray200
+                    )
+                    Text(
+                        text = "${selectedAnswers.size}/${questions.size} preguntas respondidas",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MusicGameColors.Gray800,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
+            }
+
+            // Preguntas
+            questions.forEachIndexed { qIndex, question ->
+                QuestionCard(
+                    questionNumber = qIndex + 1,
+                    questionText = question,
+                    options = options[qIndex],
+                    selectedOption = selectedAnswers[qIndex],
+                    onOptionSelected = { selectedOptionText ->
+                        selectedAnswers[qIndex] = selectedOptionText
+                    }
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            // Botón de finalizar
+            Button(
+                onClick = {
+                    if (allQuestionsAnswered.value) {
+                        val intent = Intent(context, DashboardActivity::class.java)
+                        context.startActivity(intent)
+                        (context as? ComponentActivity)?.finish()
+                    } else {
+                        Toast.makeText(context, "Por favor, responde todas las preguntas antes de finalizar.", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                enabled = allQuestionsAnswered.value,
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (allQuestionsAnswered.value) MusicGameColors.Green else MusicGameColors.Gray200,
+                    contentColor = if (allQuestionsAnswered.value) MusicGameColors.Black else MusicGameColors.Gray800
+                ),
+                shape = RoundedCornerShape(16.dp),
+                elevation = ButtonDefaults.buttonElevation(defaultElevation = 6.dp)
+            ) {
+                Text(
+                    text = if (allQuestionsAnswered.value) "✅ Finalizar Test" else "Completa todas las preguntas",
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
         }
-        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 
 @Composable
-fun QuestionItem(
+fun QuestionCard(
     questionNumber: Int,
     questionText: String,
     options: List<String>,
     selectedOption: String?,
-    onOptionSelected: (String) -> Unit //  Callback para cuando se selecciona una opción
+    onOptionSelected: (String) -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = "Pregunta $questionNumber:",
-            fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 4.dp),
-            color = Color.White
-        )
-        Text(
-            text = questionText,
-            fontSize = 20.sp,
-            fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 12.dp),
-            color = Color.White
-        )
-
-        options.forEach { option ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MusicGameColors.White.copy(alpha = 0.9f)
+        ),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+    ) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            // Número de pregunta
+            Surface(
+                modifier = Modifier.padding(bottom = 12.dp),
+                shape = RoundedCornerShape(12.dp),
+                color = MusicGameColors.Orange
             ) {
-                RadioButton(
-                    selected = (option == selectedOption),
-                    onClick = { onOptionSelected(option) },
-                    colors = RadioButtonDefaults.colors(
-                        selectedColor = MaterialTheme.colorScheme.primary,
-                        unselectedColor = Color.White
-                    )
-                )
                 Text(
-                    text = option,
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(start = 8.dp),
-                    color = Color.White
+                    text = "Pregunta $questionNumber",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MusicGameColors.White,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
                 )
+            }
+
+            // Texto de la pregunta
+            Text(
+                text = questionText,
+                style = MaterialTheme.typography.headlineMedium,
+                color = MusicGameColors.Black,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            // Opciones
+            options.forEach { option ->
+                val isSelected = (option == selectedOption)
+
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp)
+                        .clickable { onOptionSelected(option) },
+                    shape = RoundedCornerShape(12.dp),
+                    color = if (isSelected) MusicGameColors.Blue.copy(alpha = 0.2f) else MusicGameColors.Gray100,
+                    border = androidx.compose.foundation.BorderStroke(
+                        width = if (isSelected) 2.dp else 1.dp,
+                        color = if (isSelected) MusicGameColors.Blue else MusicGameColors.Gray200
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = isSelected,
+                            onClick = { onOptionSelected(option) },
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = MusicGameColors.Blue,
+                                unselectedColor = MusicGameColors.Gray800
+                            )
+                        )
+                        Text(
+                            text = option,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = if (isSelected) MusicGameColors.Blue else MusicGameColors.Black,
+                            modifier = Modifier.padding(start = 8.dp)
+                        )
+                    }
+                }
             }
         }
     }
