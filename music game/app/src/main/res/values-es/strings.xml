@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tonika</string>
+
+    <string name="nav_levels">Niveles</string>
+    <string name="nav_settings">Ajustes</string>
+    <string name="nav_language">Idioma</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="nav_about">Acerca de</string>
+
+    <string name="content_description_levels_icon">Icono de Niveles</string>
+    <string name="content_description_settings_icon">Icono de Ajustes</string>
+    <string name="content_description_language_icon">Icono de Idioma</string>
+    <string name="content_description_profile_icon">Icono de Perfil</string>
+    <string name="content_description_about_icon">Icono de Acerca de</string>
+
+    <string name="login_title">Iniciar sesión</string>
+    <string name="login_subtitle">Descubre y juega con tu música favorita</string>
+    <string name="login_email_or_username_hint">Correo o Usuario</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="login_button_text">Iniciar sesión</string>
+    <string name="login_no_account_prefix">¿No tienes cuenta? </string>
+    <string name="login_register_link">Registrarse</string>
+    <string name="login_success_message">Inicio de sesión exitoso. ¡Bienvenido!</string>
+    <string name="login_error_credentials">Credenciales incorrectas. Intenta de nuevo.</string>
+
+    <string name="register_title">Crear cuenta</string>
+    <string name="register_subtitle">Únete a la comunidad de músicos</string>
+    <string name="register_username_hint">Nombre de usuario</string>
+    <string name="register_email_hint">Correo electrónico</string>
+    <string name="register_password_hint">Contraseña</string>
+    <string name="register_confirm_password_hint">Confirmar contraseña</string>
+    <string name="register_button_text">Crear cuenta</string>
+    <string name="register_has_account_prefix">¿Ya tienes una cuenta? </string>
+    <string name="register_login_link">Iniciar sesión</string>
+    <string name="register_success_message">Registro exitoso. ¡Bienvenido!</string>
+    <string name="register_error_passwords_mismatch">Las contraseñas no coinciden.</string>
+    <string name="register_error_generic">Error al registrar el usuario. El usuario o email ya existen.</string>
+
+    <string name="welcome_title">¡Bienvenido a Tonika!</string>
+    <string name="welcome_subtitle">¿Qué quieres hacer hoy?</string>
+    <string name="welcome_explore_levels_button">Explorar Niveles</string>
+    <string name="welcome_take_test_button">Tomar Test de Música</string>
+
+    <string name="home_welcome_title">¡Bienvenido de vuelta!</string>
+    <string name="home_welcome_subtitle">Selecciona una opción para empezar tu aventura musical.</string>
+    <string name="home_button_tests">Comenzar un Test</string>
+
+    <string name="levels_title">Niveles</string>
+    <string name="levels_menu_options">Menú de opciones</string>
+    <string name="levels_menu_help_tutorial">Ayuda / Tutorial</string>
+    <string name="levels_opening_help_toast">Abriendo Ayuda…</string>
+    <string name="level_item_prefix">Nivel</string>
+
+    <string name="level_detail_title_prefix">¡Ingreso al Nivel %d!</string>
+    <string name="level_detail_description_prefix">Aquí es donde comenzarán los desafíos del Nivel %d.</string>
+
+    <string name="help_title">¿Necesitas Ayuda?</string>
+    <string name="help_description">Aquí encontrarás tutoriales, consejos de juego, explicación de conceptos musicales…</string>
+    <string name="help_example_note">(Esta es una pantalla de ejemplo por ahora)</string>
+
+    <string name="progress_title">¡Progreso y Estadísticas!</string>
+    <string name="progress_description">Aquí podrás ver tus niveles completados, puntuaciones, logros…</string>
+    <string name="progress_example_note">(Esta es una pantalla de ejemplo por ahora)</string>
+
+    <string name="profile_title">Mi Perfil</string>
+    <string name="profile_content_description_photo">Foto de perfil</string>
+    <string name="profile_default_username">Usuario</string>
+    <string name="profile_email_not_available">No disponible</string>
+    <string name="profile_member_since_prefix">Miembro desde: %s</string>
+    <string name="profile_no_user_logged_in">No hay usuario logeado</string>
+    <string name="profile_error_loading_name">Error al cargar nombre</string>
+    <string name="profile_stats_title">Estadísticas del Juego</string>
+    <string name="profile_levels_completed">Niveles Completados: --/--</string>
+    <string name="profile_total_score">Puntuación Total: ----</string>
+    <string name="profile_achievements_unlocked">Logros Desbloqueados: --</string>
+    <string name="profile_logout_button">Cerrar Sesión</string>
+    <string name="profile_logout_success">Sesión cerrada exitosamente.</string>
+
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_sound_effects">Efectos de Sonido</string>
+    <string name="settings_sound_toast_on">Sonido: Activado</string>
+    <string name="settings_sound_toast_off">Sonido: Desactivado</string>
+    <string name="settings_reset_progress_button">Restablecer Progreso</string>
+    <string name="settings_reset_progress_toast">Progreso restablecido (simulado)</string>
+    <string name="settings_dark_theme">Tema Oscuro</string>
+    <string name="settings_notifications">Notificaciones</string>
+    <string name="settings_notifications_activated">Notificaciones activadas</string>
+    <string name="settings_notifications_message">¡Has activado las notificaciones del juego!</string>
+    <string name="settings_more_options">Más opciones de ajuste...</string>
+
+    <string name="language_title">Idioma</string>
+    <string name="select_language">Selecciona tu idioma preferido:</string>
+    <string name="system_default">Predeterminado del sistema</string>
+    <string name="language_english">English</string>
+    <string name="language_spanish">Español</string>
+
+    <string name="test_title">Test de Nivel Musical</string>
+    <string name="test_subtitle">Responde estas preguntas para que podamos recomendarte el mejor nivel</string>
+    <string name="test_progress_format">Pregunta %1$d de %2$d</string>
+    <string name="test_next_button">Siguiente Pregunta</string>
+    <string name="test_incomplete_toast">Por favor, responde todas las preguntas antes de finalizar.</string>
+    <string name="test_finish_button_enabled">Finalizar Test</string>
+    <string name="test_finish_button_disabled">Completa todas las preguntas</string>
+
+    <string name="title_activity_result">Resultados del Test</string>
+    <string name="results_title">¡Test Finalizado!</string>
+    <string name="results_back_to_dashboard_button">Volver al Dashboard</string>
+
+    <string name="about_title">Acerca de Tonika</string>
+    <string name="about_logo_content_description">Logo de Tonika</string>
+    <string name="about_app_name_slogan">Tonika: ¡La Sinfonía de tus Dedos!</string>
+    <string name="about_version">Versión: 1.0 (Beta Inestable del Multiverso)</string>
+    <string name="about_developed_by">Desarrollado por: Los Genios del Caos Cuántico y Desarrollos Musicales S.A.S.</string>
+    <string name="about_description_part1">Tonika es la aplicación revolucionaria que te permite sentir la música hasta en los huesos (de pollo). ¿Cansado de la armonía tradicional? ¡Nosotros también! Por eso creamos Tonika, donde la disonancia es un arte y el ritmo es una sugerencia.</string>
+    <string name="about_features">Características destacadas:\n🎵 Notas invisibles: Desafía tu percepción auditiva.\n🥁 Ritmos aleatorios: Nunca dos canciones son iguales (ni siquiera la misma canción).\n🤯 Modo \'Caos\': Porque a veces solo quieres ver el mundo arder (musicalmente).</string>
+    <string name="about_disclaimer">Patentes pendientes en la galaxia de Andrómeda. No nos hacemos responsables de melodías pegadizas inexplicables o la repentina necesidad de bailar el chachachá en público.</string>
+    <string name="about_copyright">© 2025 Tonika Corp. Todos los derechos reservados... o al menos los que pudimos recordar guardar.</string>
+
+</resources>

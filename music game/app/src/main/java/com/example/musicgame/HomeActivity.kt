@@ -3,7 +3,7 @@ package com.example.musicgame
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
+import com.example.musicgame.ui.view.welcome.WelcomeActivity
 
 class HomeActivity : AppCompatActivity() {
 

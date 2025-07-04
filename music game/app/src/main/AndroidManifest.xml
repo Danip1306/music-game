@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,24 +16,48 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MusicGame"
         tools:targetApi="31">
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.view.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ui.view.register.RegisterActivity" />
+        <activity android:name=".ui.view.leveldetail.LevelDetailActivity"/>
+        <activity android:name=".ui.view.levels.LevelsActivity"/>
+        <activity android:name=".ui.view.help.HelpActivity"/>
+        <activity android:name=".ui.view.test.TestActivity"/>
+        <activity android:name=".ui.view.welcome.WelcomeActivity"/>
+        <activity android:name=".ui.view.settings.SettingsActivity"/>
+        <activity android:name=".ui.view.progress.ProgressActivity"/>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".WelcomeActivity" />
-        <activity android:name=".TestActivity" />
-        <activity android:name=".LevelsActivity" />
-        <activity android:name=".LevelDetailActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".DashboardActivity" />
-        <activity android:name=".ProgressActivity" />
-        <activity android:name=".HelpActivity" />
+        <activity android:name=".ui.view.dashboard.DashboardActivity" />
+
+        <activity
+            android:name=".ui.view.result.ResultActivity"
+            android:exported="false"
+            android:label="@string/title_activity_result"
+            android:theme="@style/Theme.MusicGame" />
+
+        <service
+            android:name=".notifications.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher_foreground" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/purple_200" />
+
     </application>
 
 </manifest>
